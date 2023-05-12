@@ -51,7 +51,10 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
                                 Menu
                             </a>
-                           
+                           <a class="nav-link" href="Transaction.aspx">
+                                <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
+                                Transaction
+                            </a>
                         </div>
                     </div>
 <div class="sb-sidenav-footer">

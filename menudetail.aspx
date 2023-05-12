@@ -19,14 +19,10 @@
         <nav class="navbar">
             <a href="index.aspx" class="navbar-logo">Sayonara<span>Cafe</span>.</a>
         <div class="navbar-nav">
-            <a href="index.aspx">Home</a>   
             <a href="menu.aspx">Menu</a>
-            <a href="#contact">Kontak</a>
-            <a href="#about">Tentang Kami</a>
         </div>
 
         <div class="navbar-extra">
-            <a href="#" id="search"><i data-feather="search"></i></a>
             <a href="../cart.aspx" id="shopping-cart"><i data-feather="shopping-cart"></i></a>
             <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
         </div>

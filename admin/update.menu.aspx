@@ -89,7 +89,7 @@
 
     <div style="text-align: right;">
         <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
-        <a href="#" class="btn btn-danger">Cancel</a>
+        <a href="menu.aspx" class="btn btn-danger">Cancel</a>
     </div>
 </form>
                     </div>

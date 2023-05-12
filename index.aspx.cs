@@ -14,5 +14,51 @@ namespace SayoCafe
         {
 
         }
+
+        protected void KonfirmasiPemesanan_Click(object sender, EventArgs e)
+        {
+            // Mendapatkan nilai dari input form
+            string namaPelanggan = nama_pelanggan.Value;
+            string nomorMeja = nomor_meja.Value;
+            string noHp = no_hp.Value;
+
+            // Membuat koneksi ke database MySQL
+            string connectionString = "server=localhost;database=db_sayocafe;uid=root;pwd=";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            try
+            {
+                // Membuka koneksi ke database
+                connection.Open();
+
+                // Membuat perintah SQL untuk menyimpan data pelanggan
+                string query = "INSERT INTO transactionheader (custname, numbertable, custphonenum) VALUES (@namaPelanggan, @nomorMeja, @noHp)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                // Menambahkan parameter ke perintah SQL
+                command.Parameters.AddWithValue("@namaPelanggan", namaPelanggan);
+                command.Parameters.AddWithValue("@nomorMeja", nomorMeja);
+                command.Parameters.AddWithValue("@noHp", noHp);
+
+                // Menjalankan perintah SQL untuk menyimpan data pelanggan
+                command.ExecuteNonQuery();
+
+                // Menampilkan pesan sukses
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Pesanan berhasil disimpan!');", true);
+
+                // Redirect ke halaman menu
+                Response.Redirect("menu.aspx");
+            }
+            catch (Exception ex)
+            {
+                // Menampilkan pesan error
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Terjadi kesalahan: " + ex.Message + "');", true);
+            }
+            finally
+            {
+                // Menutup koneksi ke database
+                connection.Close();
+            }
+        }
     }
 }

@@ -30,12 +30,9 @@
     <div class="navbar-nav">
         <a href="#home">Home</a>   
         <a href="menu.aspx">Menu</a>
-        <a href="#contact">Kontak</a>
-        <a href="#about">Tentang Kami</a>
     </div>
 
     <div class="navbar-extra">
-        <a href="#" id="search"><i data-feather="search"></i></a>
         <a href="cart.aspx" id="shopping-cart"><i data-feather="shopping-cart"></i></a>
         <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
     </div>
@@ -43,14 +40,38 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <main class="content">
-            <h1>Lengkapi Harimu Dengan Segelas <span>Kopi</span></h1>
-            <p>Rasakan Keajaiban Kopi: Aroma Mewah, Rasa Memikat, Kenikmatan Sejati</p>
-            <a href="#" class="cta">Pesan Sekarang</a>
-        </main>
-    </section>
+<section class="hero" id="home">
+  <main class="content">
+    <h1>Lengkapi Harimu Dengan Segelas <span>Kopi</span></h1>
+    <p>Rasakan Keajaiban Kopi: Aroma Mewah, Rasa Memikat, Kenikmatan Sejati</p>
+    <button id="open-modal" class="cta">Pesan Sekarang</button>
+  </main>
+</section>
 
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+      <div class="customer-info">
+            <h2>Informasi Pelanggan</h2>
+<form id="form1" runat="server">
+    <div class="customer-field">
+        <label for="nama-pelanggan">Nama Pelanggan:</label>
+        <input type="text" id="nama_pelanggan" placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" runat="server">
+    </div>
+    <div class="customer-field">
+        <label for="nomor-meja">Nomor Meja:</label>
+        <input type="text" id="nomor_meja" placeholder="Masukkan Nomor Meja" name="nomor_meja" runat="server">
+    </div>
+    <div class="customer-field">
+        <label for="no-hp">No. HP:</label>
+        <input type="text" id="no_hp" placeholder="Masukkan No. HP" name="no_hp" runat="server">
+    </div>
+    <asp:Button ID="btnKonfirmasi" class="cta modal-btn" onclick="KonfirmasiPemesanan_Click" runat="server" Text="Konfirmasi Pemesanan" />
+</form>
+
+</div>
+  </div>
+    </div>
     <!-- Tentang Kami -->
     <section id="about" class="about">
         <h2>Tentang<span> Kami</span></h2>
@@ -85,7 +106,7 @@ string connectionString = "server=localhost;database=db_sayocafe;uid=root;pwd=;"
 using (MySqlConnection conn = new MySqlConnection(connectionString))
 {
     // buat query untuk mengambil data makanan
-    string query = "SELECT menucode, menuname, menuprice, menusubtitle, image FROM menu LIMIT 5";
+    string query = "SELECT menucode, menuname, menuprice, menusubtitle, image FROM menu LIMIT 4";
     MySqlCommand cmd = new MySqlCommand(query, conn);
 
     // buka koneksi dan jalankan query
@@ -120,34 +141,8 @@ using (MySqlConnection conn = new MySqlConnection(connectionString))
 %>
 
 </div>
-</div>
 </section>
 
-
-    <!-- Kontak Section -->
-    <section id="contact" class="contact">
-        <h2>Kontak <span>Kami</span></h2>
-        <p>Dapatkan Promo - Promo Menarik Di SayoCafe</p>
-
-        <div class="row">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1667.1823250098105!2d106.8245586784706!3d-6.361659857560053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ede45d58fb49%3A0x21554697b3fe24f!2sKopi%20Kenangan%20FEB%20UI!5e0!3m2!1sid!2sid!4v1683386224928!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
-            <form action="">
-                <div class="input-group">
-                    <i data-feather="user"></i>
-                        <input type="text" placeholder="Nama">
-                </div>
-                <div class="input-group">
-                    <i data-feather="mail"></i>
-                        <input type="text" placeholder="Email">
-                </div>
-                <div class="input-group">
-                    <i data-feather="phone"></i>
-                        <input type="text" placeholder="No.HP">
-                </div>
-                <button type="submit" class="btn">Kirim</button>
-            </form>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer>
@@ -158,10 +153,10 @@ using (MySqlConnection conn = new MySqlConnection(connectionString))
         </div>
 
         <div class="links">
-            <a href="#home">Home</a>
-            <a href="#menu">Menu</a>
-            <a href="#contact">Kontak</a>
-            <a href="#about">Tentang Kami</a>
+            <a href="#">Home</a>
+            <a href="#">Menu</a>
+            <a href="#">Kontak</a>
+            <a href="#">Tentang Kami</a>
         </div>
 
         <div class="credit">

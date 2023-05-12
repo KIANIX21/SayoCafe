@@ -65,6 +65,7 @@
                         </ol>
                         <asp:Label ID="lblStatus" runat="server" Text="Label"></asp:Label>
 <form id="formDelete" runat="server" enctype="multipart/form-data">
+
     <div class="mb-3">
         <label for="txtMenuName" class="form-label">Nama Menu</label>
         <asp:TextBox runat="server" ID="txtMenuName" CssClass="form-control" required="required"></asp:TextBox>
@@ -90,7 +91,8 @@
         <asp:TextBox runat="server" ID="txtMenuImage" CssClass="form-control"></asp:TextBox>
     </div>
     <div class="d-grid gap-2">
-        <asp:Button ID="confirmDelete" runat="server" class="btn btn-warning btn-block" Text="Delete" OnClick="btnDelete_Click"  />
+<asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-danger" OnClick="btnDelete_Click"/>
+        <asp:HiddenField ID="confirmValue" runat="server" />
     </div>
 </form>
                     </div>
@@ -116,6 +118,7 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
     </body>
 </html>
 

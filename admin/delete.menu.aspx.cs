@@ -54,35 +54,25 @@ namespace SayoCafe.admin
             // Get the menucode from query string
             string menuCode = Request.QueryString["menucode"];
 
-            // Show confirmation dialog before deleting the menu data
-            string confirmValue = Request.Form["confirm_value"];
-            if (confirmValue == "Yes")
+            // Delete the menu data in database
+            string connString = "Server=localhost;Database=db_sayocafe;Uid=root;Pwd=;";
+            using (MySqlConnection connection = new MySqlConnection(connString))
             {
-                // Delete the menu data from database
-                string connString = "Server=localhost;Database=db_sayocafe;Uid=root;Pwd=;";
-                using (MySqlConnection connection = new MySqlConnection(connString))
+                connection.Open();
+                string query = "DELETE FROM menu WHERE menucode = @menucode";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    connection.Open();
-                    string query = "DELETE FROM menu WHERE menucode = @menucode";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    command.Parameters.AddWithValue("@menucode", menuCode);
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
                     {
-                        command.Parameters.AddWithValue("@menucode", menuCode);
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            Response.Redirect("menu.aspx");
-                        }
-                        else
-                        {
-                            lblStatus.Text = "Delete failed";
-                        }
+                        Response.Redirect("menu.aspx");
+                    }
+                    else
+                    {
+                        lblStatus.Text = "Delete failed";
                     }
                 }
-            }
-            else
-            {
-                // Show confirmation dialog
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "confirm", "if(confirm('Are you sure you want to delete this menu?')){document.getElementById('" + confirmDelete.ClientID + "').click();}", true);
             }
         }
     }

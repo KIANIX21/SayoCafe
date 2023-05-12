@@ -36,7 +36,7 @@ namespace SayoCafe.admin
                 }
                 else
                 {
-                    Response.Redirect("~/admin/login.aspx");
+                    Response.Redirect("~/login.aspx");
                 }
             }
         }
