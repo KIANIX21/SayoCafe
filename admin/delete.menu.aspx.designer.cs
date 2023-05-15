@@ -24,15 +24,6 @@ namespace SayoCafe.admin
         protected global::System.Web.UI.WebControls.Label lblAdminName;
 
         /// <summary>
-        /// lblStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStatus;
-
-        /// <summary>
         /// formDelete control.
         /// </summary>
         /// <remarks>
@@ -87,13 +78,13 @@ namespace SayoCafe.admin
         protected global::System.Web.UI.WebControls.TextBox txtStock;
 
         /// <summary>
-        /// txtMenuImage control.
+        /// imgMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMenuImage;
+        protected global::System.Web.UI.WebControls.Image imgMenu;
 
         /// <summary>
         /// btnDelete control.
@@ -103,14 +94,5 @@ namespace SayoCafe.admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelete;
-
-        /// <summary>
-        /// confirmValue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField confirmValue;
     }
 }

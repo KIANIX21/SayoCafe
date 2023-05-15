@@ -43,7 +43,7 @@ namespace SayoCafe
                 else
                 {
                     // Show error message
-                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Email atau password salah!');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Nama atau password salah!');", true);
                     reader.Close();
                     conn.Close();
                 }

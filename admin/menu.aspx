@@ -38,31 +38,27 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="kategori.aspx">
-                                <div class="sb-nav-link-icon"><i class="bi bi-list"></i></div>
-                                Kategori
-                            </a>
-                            <a class="nav-link" href="menu.aspx">
-                                <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
-                                Menu
-                            </a>
-                           <a class="nav-link" href="Transaction.aspx">
-                                <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
-                                Transaction
-                            </a>
-                        </div>
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="kategori.aspx">
+                            <div class="sb-nav-link-icon"><i class="bi bi-list"></i></div>
+                            Kategori
+                        </a>
+                        <a class="nav-link" href="menu.aspx">
+                            <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
+                            Menu
+                        </a>
                     </div>
-<div class="sb-sidenav-footer">
-    <div class="small">Logged in as:</div>
-    <asp:Label ID="lblAdminName" runat="server"></asp:Label>
-</div>
-                </nav>
-            </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <asp:Label ID="lblAdminName" runat="server"></asp:Label>
+                </div>
+            </nav>
+        </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -75,6 +71,82 @@
                             <i class="fas fa-table me-1"></i>
                             Data Menu
                         </div>
+                        <% 
+                            string createAlert = Request.QueryString["create"];
+                            if (createAlert == "success")
+                            {
+                        %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Add Data Successfull!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                            }
+                            else if (createAlert == "error")
+                            {
+                        %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Add Data Failed!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                        }
+                        else
+                        {
+                            Response.Write("");
+                        }
+                        %>
+
+                        <% 
+                            string updateAlert = Request.QueryString["update"];
+                            if (updateAlert == "success")
+                            {
+                        %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Update Successfull!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                            }
+                            else if (updateAlert == "error")
+                            {
+                        %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Update Failed!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                        }
+                        else
+                        {
+                            Response.Write("");
+                        }
+                        %>
+                         <% 
+                            string deleteAlert = Request.QueryString["delete"];
+                            if (deleteAlert == "success")
+                            {
+                        %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Delete Successfull!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                            }
+                            else if (deleteAlert == "error")
+                            {
+                        %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Delete Failed!</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%
+                        }
+                        else
+                        {
+                            Response.Write("");
+                        }
+                        %>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
@@ -97,7 +169,7 @@
                                         using (MySqlConnection conn = new MySqlConnection(connString))
                                         {
                                             //query untuk membaca data dari tabel menu
-                                            string query = "SELECT * FROM menu";
+                                            string query = "SELECT * FROM menu ORDER BY menucode DESC;";
                                             MySqlCommand cmd = new MySqlCommand(query, conn);
 
                                             //membuka koneksi dan membaca data menggunakan MySqlDataReader
@@ -170,6 +242,6 @@
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>am
+    <script src="js/datatables-simple-demo.js"></script>
 </body>
 </html>

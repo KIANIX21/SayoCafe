@@ -11,18 +11,36 @@ namespace SayoCafe.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Get admin code from session
-            string Admincode = (string)Session["admincode"];
-            if (Admincode == null)
+            if (!IsPostBack)
             {
-                Response.Redirect("~/login.aspx");
-            }
-            else
-            {
-                // Show admin code in textbox
-                admincode.Text = Admincode;
+                if (Session["admincode"] != null)
+                {
+                    string adminCode = Session["admincode"].ToString();
+                    string connString = "server=localhost;user=root;database=db_sayocafe;password=;";
+                    MySqlConnection conn = new MySqlConnection(connString);
+                    try
+                    {
+                        conn.Open();
+                        MySqlCommand cmd = new MySqlCommand("SELECT adminname FROM admin WHERE admincode=@admincode", conn);
+                        cmd.Parameters.AddWithValue("@admincode", adminCode);
+                        string adminName = cmd.ExecuteScalar().ToString();
+                        conn.Close();
+                        admincode.Text = adminCode;
+                        lblAdminName.Text = adminName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Database error: " + ex.Message + "');", true);
+                        conn.Close();
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/login.aspx");
+                }
             }
         }
+
 
 
         protected void btnCreate_Click(object sender, EventArgs e)
@@ -62,11 +80,13 @@ namespace SayoCafe.admin
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        Response.Redirect("menu.aspx");
+                        // Redirect to the show.aspx page with a success message
+                        Response.Redirect("menu.aspx?create=success");
                     }
                     else
                     {
-                        Response.Write("Error: Failed to add new menu item.");
+                        // Redirect to the show.aspx page with an error message
+                        Response.Redirect("menu.aspx?create=error");
                     }
                 }
             }

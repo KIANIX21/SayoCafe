@@ -47,8 +47,7 @@
                             <a class="nav-link" href="menu.aspx">
                                 <div class="sb-nav-link-icon"><i class="bi bi-menu-button"></i></div>
                                 Menu
-                            </a>
-                           
+                            </a>                        
                         </div>
                     </div>
 <div class="sb-sidenav-footer">
@@ -64,7 +63,6 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"> Update Menu</li>
                         </ol>
-                        <asp:Label ID="lblStatus" runat="server" Text="Label"></asp:Label>
 <form id="formUpdate" runat="server" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="txtMenuName" class="form-label">Nama Menu</label>

@@ -41,6 +41,28 @@ namespace SayoCafe.admin
                         }
                     }
                 }
+                // Get admin code from session
+                string adminCode = (string)Session["admincode"];
+                if (adminCode == null)
+                {
+                    Response.Redirect("~/login.aspx");
+                }
+                else
+                {
+                    // Retrieve admin name from database
+                    string connString2 = "Server=localhost;Database=db_sayocafe;Uid=root;Pwd=;";
+                    using (MySqlConnection connection2 = new MySqlConnection(connString2))
+                    {
+                        connection2.Open();
+                        string query2 = "SELECT adminname FROM admin WHERE admincode = @admincode";
+                        using (MySqlCommand command2 = new MySqlCommand(query2, connection2))
+                        {
+                            command2.Parameters.AddWithValue("@admincode", adminCode);
+                            string adminName = (string)command2.ExecuteScalar();
+                            lblAdminName.Text = adminName;
+                        }
+                    }
+                }
             }
         }
 
@@ -67,11 +89,11 @@ namespace SayoCafe.admin
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        Response.Redirect("menu.aspx");
+                        Response.Redirect("menu.aspx?update=success");
                     }
                     else
                     {
-                        lblStatus.Text = "Update failed";
+                        Response.Redirect("menu.aspx?update=error");
                     }
                 }
             }

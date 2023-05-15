@@ -63,36 +63,35 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"> Hapus Menu</li>
                         </ol>
-                        <asp:Label ID="lblStatus" runat="server" Text="Label"></asp:Label>
 <form id="formDelete" runat="server" enctype="multipart/form-data">
 
     <div class="mb-3">
         <label for="txtMenuName" class="form-label">Nama Menu</label>
-        <asp:TextBox runat="server" ID="txtMenuName" CssClass="form-control" required="required"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtMenuName" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
     </div>
     <div class="mb-3">
         <label for="txtCategoryCode" class="form-label">Category Kode</label>
-        <asp:TextBox runat="server" ID="txtCategoryCode" CssClass="form-control" required="required"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtCategoryCode" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
     </div>
     <div class="mb-3">
         <label for="txtDescription" class="form-label">Deskripsi</label>
-        <asp:TextBox runat="server" ID="txtDescription" CssClass="form-control" required="required"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtDescription" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
     </div>
     <div class="mb-3">
         <label for="txtPrice" class="form-label">Harga</label>
-        <asp:TextBox runat="server" ID="txtPrice" CssClass="form-control" required="required"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtPrice" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
     </div>
     <div class="mb-3">
         <label for="txtStock" class="form-label">Stok</label>
-        <asp:TextBox runat="server" ID="txtStock" CssClass="form-control" required="required"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtStock" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
     </div>
     <div class="mb-3">
         <label for="txtMenuImage" class="form-label">Gambar</label>
-        <asp:TextBox runat="server" ID="txtMenuImage" CssClass="form-control"></asp:TextBox>
+        <asp:Image ID="imgMenu" runat="server" ReadOnly="true" />
     </div>
     <div class="d-grid gap-2">
-<asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-danger" OnClick="btnDelete_Click"/>
-        <asp:HiddenField ID="confirmValue" runat="server" />
+<asp:Button runat="server" ID="btnDelete" Text="Delete" CssClass="btn btn-warning" OnClick="btnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this data?');"/>
+        <a href="menu.aspx" class="btn btn-danger">Cancel</a>
     </div>
 </form>
                     </div>

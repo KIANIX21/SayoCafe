@@ -116,15 +116,14 @@
     <Content Include="admin\kategori.aspx" />
     <Content Include="admin\menu.aspx" />
     <Content Include="admin\update.menu.aspx" />
-    <Content Include="bayar.aspx" />
     <Content Include="cart.aspx" />
     <Content Include="css\cart.css" />
     <Content Include="css\detail.menu.css" />
     <Content Include="css\login.css" />
     <Content Include="css\style.css" />
+    <Content Include="db_sayocafe.sql" />
     <Content Include="img\header-bg.jpg" />
     <Content Include="img\tentang-kami.jpg" />
-    <Content Include="js\cart.js" />
     <Content Include="js\script.js" />
     <Content Include="login.aspx" />
     <Content Include="menu.aspx" />
@@ -186,13 +185,6 @@
     </Compile>
     <Compile Include="admin\update.menu.aspx.designer.cs">
       <DependentUpon>update.menu.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="bayar.aspx.cs">
-      <DependentUpon>bayar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="bayar.aspx.designer.cs">
-      <DependentUpon>bayar.aspx</DependentUpon>
     </Compile>
     <Compile Include="cart.aspx.cs">
       <DependentUpon>cart.aspx</DependentUpon>

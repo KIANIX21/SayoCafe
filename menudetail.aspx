@@ -13,6 +13,13 @@
     <title>Deskripsi Produk</title>
     <!-- Feather Icons-->
     <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        input[type=number] {
+  width: 40px;
+  height: 40px;
+}
+
+    </style>
 </head>
 <body>
             <!-- Navbar -->
@@ -61,8 +68,10 @@
             <p>Menu - <%= namaMakanan %></p>
             <p id="categName"><%= categname %></p>
             <h1 id="namaMakanan"><%= namaMakanan %></h1>
-            <h4>IDR <%= hargaMakanan.ToString("N0") %></h4>
-            <a href="" class="btn">Add To Cart</a>
+            <h4 id="hargaMakanan">IDR <%= hargaMakanan.ToString("N0") %></h4>
+            <input type="number" id="quantity" value="1">
+            <br>
+            <button id="btnAdd" class="btn">Add To Cart</button>
             <h3>Deskripsi Menu</h3>
             <br>
             <p><%= deskripsiMakanan %></p>
@@ -98,7 +107,52 @@
               <script>
                 feather.replace()
               </script>
-    <script src="js/cart.js"></script>
     <script src="js/script.js"></script>
+<script>
+    btnAdd.addEventListener('click', () => {
+        // Ambil data produk yang ingin ditambahkan ke keranjang
+        const productName = document.getElementById('namaMakanan').textContent;
+        const productPriceElement = document.getElementById('hargaMakanan');
+        const productPrice = parseFloat(productPriceElement.textContent.replace('IDR ', '').replace('.', ''));
+        const categoryElement = document.getElementById('categName');
+        const categoryName = categoryElement.textContent;
+        let quantity = parseFloat(document.getElementById('quantity').value) || 1; // Ambil nilai quantity, defaultnya 1 jika tidak ada input quantity dari pengguna
+
+        // Hitung total harga
+        let totalPrice = productPrice * quantity;
+
+        // Buat objek item cart
+        const itemCart = {
+            menuName: productName,
+            categoryName: categoryName,
+            price: productPrice,
+            quantity: quantity,
+            totalPrice: totalPrice
+        };
+
+        // Simpan objek item cart ke dalam array "cart"
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Cek apakah item sudah ada di cart
+        let itemAlreadyInCart = false;
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].menuName === itemCart.menuName && cart[i].categoryName === itemCart.categoryName) {
+                cart[i].quantity += itemCart.quantity;
+                cart[i].totalPrice += itemCart.totalPrice;
+                itemAlreadyInCart = true;
+                break;
+            }
+        }
+
+        // Jika item belum ada di cart, maka tambahkan item ke cart
+        if (!itemAlreadyInCart) {
+            cart.push(itemCart);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`Menu ${productName} berhasil ditambahkan ke keranjang`);
+    });
+</script>
+
 </body>
 </html>

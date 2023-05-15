@@ -19,6 +19,46 @@
 
     <!-- Feather Icons-->
     <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* Style untuk modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Style untuk konten modal */
+.modal-content {
+  background-color: blue;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* Style untuk tombol close */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Style untuk tombol close pada hover */
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+    </style>
 </head>
 <body>
 
@@ -41,7 +81,42 @@
     <!-- Menu Section -->
     <div class="container">
         <h1>Keranjang Belanja</h1>
+        <table>
+        <thead>
+      <tr>
+        <th>Nama Menu</th>
+        <th>Harga</th>
+        <th>Kategori</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+       <tbody>
+       </tbody>
+        </table>
 
+<div class="checkout">
+  <a href="#" class="btn-konfirmasi" onclick="showModal()">Bayar</a>
+</div>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="hideModal()">&times;</span>
+    <h2>Konfirmasi Pembelian</h2>
+    <p>Silakan cek kembali pesanan Anda:</p>
+    <table id="checkout-table">
+      <thead>
+        <tr>
+          <th>Nama Menu</th>
+          <th>Harga</th>
+          <th>Kategori</th>
+          <th>Jumlah</th>
+          <th>Total Harga</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
 <div class="customer-info">
     <h2>Informasi Pelanggan</h2>
     <form id="form1" runat="server">
@@ -63,12 +138,10 @@
     </div>
         </form>
 </div>
-        <table>
-        </table>
+    <button class="btn-konfirmasi-pembelian" onclick="konfirmasiPembelian()">Konfirmasi Pembelian</button>
+  </div>
+</div>
 
-        <div class="checkout">
-            <a href="#" class="btn-konfirmasi">Bayar</a>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -99,124 +172,112 @@
     <!-- Javascript -->
     <script src="js/script.js"></script>
     <script>
-        function renderCartItems() {
-            // Get cart items from session storage
-            const cartItems = JSON.parse(sessionStorage.getItem('cart'));
+        function showModal() {
+            // Ambil informasi dari header transaksi
+            const namaPelanggan = document.getElementById('namaPelangganInput').value;
+            const nomorMeja = document.getElementById('nomorMejaInput').value;
+            const noHp = document.getElementById('noHpInput').value;
+            const transcode = document.getElementById('transcodeLabel').textContent;
 
-            // Get table element and add header row
-            const table = document.querySelector('table');
-            let tableRows = `
-            <thead>
-                <tr>
-                    <th>Nama Menu</th>
-                    <th>Harga</th>
-                    <th>Kategori</th>
-                    <th>Quantity</th>
-                    <th></th>
-                </tr>
-            </thead>
-        `;
+            // Ambil data detail transaksi dari JSON
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // If cart has items, add rows for each item
-            if (cartItems) {
-                let i = 0;
-                while (i < cartItems.length) {
-                    tableRows += `
-                    <tbody>
-                        <tr>
-                            <td>${cartItems[i].name}</td>
-                            <td>${cartItems[i].price}</td>
-                            <td>${cartItems[i].category}</td>
-                            <td><input type="number" min="1" value="${cartItems[i].quantity}" class="item-quantity"></td>
-                            <td><button class="remove-item" data-index="${i}">Remove</button></td>
-                        </tr>
-                    </tbody>
-                `;
-                    i++;
-                }
-            } else {
-                // If cart is empty, set table rows to empty string
-                tableRows = ``;
-            }
+            // Buat HTML untuk tabel detail transaksi
+            const tableBody = document.querySelector('#checkout-table tbody');
+            tableBody.innerHTML = '';
+            cart.forEach(item => {
+                const row = tableBody.insertRow();
+                const nameCell = row.insertCell(0);
+                nameCell.textContent = item.menuName;
+                const priceCell = row.insertCell(1);
+                priceCell.textContent = `IDR ${item.price.toLocaleString()}`;
+                const categoryCell = row.insertCell(2);
+                categoryCell.textContent = item.categoryName;
+                const quantityCell = row.insertCell(3);
+                quantityCell.textContent = item.quantity;
+                const totalPriceCell = row.insertCell(4);
+                totalPriceCell.textContent = `IDR ${(item.totalPrice).toLocaleString()}`;
+            });
 
-            // Set the table's innerHTML to the generated rows
-            table.innerHTML = tableRows;
+            // Tampilkan informasi transaksi pada modal
+            document.getElementById('namaPelangganInput').textContent = namaPelanggan;
+            document.getElementById('transcodeLabel').textContent = transcode;
+            document.getElementById('nomorMejaInput').textContent = nomorMeja;
+            document.getElementById('noHpInput').textContent = noHp;
 
+            // Tampilkan modal
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'block';
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+
+        function konfirmasiPembelian() {
+            // Setelah proses pembayaran selesai, kosongkan keranjang belanja
+            localStorage.removeItem('cart');
+            // Sembunyikan modal
+            hideModal();
+            // Tampilkan pesan sukses
+            alert('Pembayaran berhasil!');
+        }
+    </script>
+    <script>
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const tableBody = document.querySelector('tbody');
+
+            tableBody.innerHTML = '';
+
+            cart.forEach(item => {
+                const row = tableBody.insertRow();
+
+                const nameCell = row.insertCell(0);
+                nameCell.textContent = item.menuName;
+
+                const priceCell = row.insertCell(1);
+                priceCell.textContent = `IDR ${item.price.toLocaleString()}`;
+
+                const categoryCell = row.insertCell(2);
+                categoryCell.textContent = item.categoryName;
+
+                const quantityCell = row.insertCell(3);
+                const quantityInput = document.createElement('input');
+                quantityInput.type = 'number';
+                quantityInput.min = 1;
+                quantityInput.value = item.quantity;
+                quantityInput.classList.add('item-quantity');
+                quantityCell.appendChild(quantityInput);
+
+                const totalPriceCell = row.insertCell(4);
+                totalPriceCell.textContent = `IDR ${(item.totalPrice).toLocaleString()}`;
+
+                const removeCell = row.insertCell(5);
+                const removeButton = document.createElement('button');
+                removeButton.classList.add('remove-item');
+                removeButton.textContent = 'Remove';
+                removeCell.appendChild(removeButton);
+            });
             // Add event listeners for remove item buttons
             const removeItemButtons = document.querySelectorAll('.remove-item');
             removeItemButtons.forEach((button) => {
                 button.addEventListener('click', () => {
                     // Get index of item to remove from button's data-index attribute
                     const index = button.dataset.index;
-                    const cart = JSON.parse(sessionStorage.getItem('cart'));
+                    const cart = JSON.parse(localStorage.getItem('cart'));
                     // Remove item from cart array and update session storage
                     cart.splice(index, 1);
-                    sessionStorage.setItem('cart', JSON.stringify(cart));
+                    local.setItem('cart', JSON.stringify(cart));
                     // Render the updated cart items
-                    renderCartItems();
+                    displayCart();
                 });
             });
+        }
 
-            // Add event listeners for quantity input fields
-            const quantityInputs = document.querySelectorAll('.item-quantity');
-            quantityInputs.forEach((input) => {
-                input.addEventListener('change', () => {
-                    // Get index of item to update from its row index
-                    const index = input.closest('tr').rowIndex - 1;
-                    const cart = JSON.parse(sessionStorage.getItem('cart'));
-                    // Update item quantity in cart array and update session storage
-                    cart[index].quantity = input.value;
-                    sessionStorage.setItem('cart', JSON.stringify(cart));
-                    // Render the updated cart items
-                    renderCartItems();
-                });
-            });
-        };
-
-        // Render the cart items when the page loads
-        renderCartItems();
-
-        // Add event listener for add to cart button
-        const addToCartButton = document.querySelector('.btn');
-        addToCartButton.addEventListener('click', () => {
-            // Ambil data produk yang ingin ditambahkan ke keranjang
-            const productName = document.getElementById('namaMakanan').textContent;
-            const productPrice = document.querySelector('h4').textContent;
-            const categname = document.getElementById('categName').textContent;
-
-            console.log('productName:', productName);
-            console.log('productPrice:', productPrice);
-            console.log('categname:', categname);
-
-            // Buat objek produk baru
-            const product = { name: productName, price: productPrice, category: categname };
-
-            // Cek apakah keranjang belanja sudah ada di session storage
-            let cart = sessionStorage.getItem('cart');
-            if (cart === null) {
-                // Jika belum ada, buat keranjang baru
-                cart = [];
-            } else {
-                // Jika sudah ada, parsing isi keranjang menjadi array
-                cart = JSON.parse(cart);
-            }
-
-            // Cek apakah produk sudah ada di dalam keranjang
-            const existingProductIndex = cart.findIndex(item => item.name === productName);
-            console.log('existingProductIndex:', existingProductIndex);
-            console.log('cart:', cart);
-            if (existingProductIndex > -1) {
-                // Jika produk sudah ada, tambahkan kuantitasnya
-                cart[existingProductIndex].quantity += 1;
-            } else {
-                // Jika belum ada, tambahkan produk ke dalam keranjang
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            // Simpan kembali isi keranjang belanja ke session storage
-            sessionStorage.setItem('cart', JSON.stringify(cart));
-            renderCartItems();
-        });
-</script>
+        displayCart();
+    </script>
 </body>
 </html>

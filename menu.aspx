@@ -116,7 +116,8 @@
     %>
             <div class="col-4">
                 <div class="menu-card">
-                    <a href="menudetail.aspx?id=<%= menucode %>" data-id="<%= menucode %>"><img src="<%= imageUrl %>" alt="<%= namaMakanan %>" class="menu-card-img"></a>
+                    <a href="menudetail.aspx?id=<%= menucode %>" data-id="<%= menucode %>">
+                    <img src="<%= imageUrl %>" alt="<%= namaMakanan %>" class="menu-card-img"></a>
                     <h3 class="menu-card-title"><%= namaMakanan %></h3>
                     <p class="menu-card-price">IDR <%= hargaMakanan %></p>
                 </div>

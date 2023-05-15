@@ -43,11 +43,30 @@ namespace SayoCafe
                 // Menjalankan perintah SQL untuk menyimpan data pelanggan
                 command.ExecuteNonQuery();
 
-                // Menampilkan pesan sukses
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Pesanan berhasil disimpan!');", true);
+                // Mendapatkan nilai transcode yang baru ditambahkan
+                query = "SELECT transcode FROM transactionheader ORDER BY transcode DESC LIMIT 1";
+                command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    string transcode = reader.GetString(0);
+                    reader.Close();
 
-                // Redirect ke halaman menu
-                Response.Redirect("menu.aspx");
+                    // Menyimpan nilai transcode pada session
+                    Session["transcode"] = transcode;
+
+                    // Menampilkan pesan sukses
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Pesanan berhasil disimpan!');", true);
+
+                    // Redirect ke halaman menu
+                    Response.Redirect("menu.aspx?code=" + transcode);
+                }
+                else
+                {
+                    // Menampilkan pesan error
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Terjadi kesalahan: tidak bisa mendapatkan kode transaksi');", true);
+                }
             }
             catch (Exception ex)
             {
